@@ -1,0 +1,44 @@
+.dot {
+    height: 25px;
+    width: 25px;
+    background-color: red;
+    border-radius: 50%;
+    display: inline-block;
+
+}
+#l{
+    color: #337ab7;
+}
+.btn{
+
+    margin-right: 3px;
+
+}
+
+.btnlog{
+
+    margin-right: 3px;
+    float: right;
+
+}
+
+.admin{
+    color: darkred;
+}
+.calendar{
+    width: 100%;
+    min-height: 100vh;
+    background: #d1d1d1;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 33px 30px;
+}
+body{
+    width: 100%;
+}

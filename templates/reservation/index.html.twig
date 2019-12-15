@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reservation index{% endblock %}
+
+{% block body %}
+<link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+<!-- Start datatable css -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.jqueryui.min.css">
+    <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+    <div id=qr">
+        <video id="preview"></video>
+        {{ form(form) }}
+
+
+    </div>
+
+    <h1>Reservation index</h1>
+    <a href="{{ path('reservation_new') }}"><i class="fas fa-plus-circle"></i>
+
+    </a>
+
+<!-- page title area end -->
+<div class="main-content-inner">
+    <div class="row">
+        <!-- data table start -->
+        <div class="col-12 mt-5">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="header-title">Data Table Default</h4>
+                    <div class="data-tables">
+                        <table id="dataTable" class="text-center">
+                            <thead class="bg-light text-capitalize">
+                            <tr>
+                                <th>Id</th>
+                                <th>DateReservation</th>
+                                <th>DateArrivee</th>
+                                <th>DateDepart</th>
+                                <th>Voucher</th>
+                                <th>NbrAdulte</th>
+                                <th>NbrEnfant</th>
+                                <th>actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for reservation in reservations %}
+                                <tr>
+                                    <td>{{ reservation.id }}</td>
+                                    <td>{{ reservation.dateReservation ? reservation.dateReservation|date('Y-m-d H:i:s') : '' }}</td>
+                                    <td>{{ reservation.dateArrivee ? reservation.dateArrivee|date('Y-m-d H:i:s') : '' }}</td>
+                                    <td>{{ reservation.dateDepart ? reservation.dateDepart|date('Y-m-d H:i:s') : '' }}</td>
+                                    <td>{{ reservation.voucher }}</td>
+                                    <td>{{ reservation.nbrAdulte }}</td>
+                                    <td>{{ reservation.nbrEnfant }}</td>
+                                    <td>
+                                        <a href="{{ path('reservation_show', {'id': reservation.id}) }}">show</a>
+                                        <a href="{{ path('reservation_edit', {'id': reservation.id}) }}">edit</a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="8">no records found</td>
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+        <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+        <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+        <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+
+        let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+        scanner.addListener('scan', function (content) {
+            console.log(content);
+            var audio = new Audio('scan.mp3');
+            audio.play();
+            $("#recherche1_code").val(content);
+
+            $("#preview").hide();
+            $("[name='recherche1']").submit();
+
+        });
+        Instascan.Camera.getCameras().then(function (cameras) {
+            if (cameras.length > 0) {
+                scanner.start(cameras[0]);
+            } else {
+                console.error('No cameras found.');
+            }
+        }).catch(function (e) {
+            console.error(e);
+        });
+    </script>
+{% endblock %}

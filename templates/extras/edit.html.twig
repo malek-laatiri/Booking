@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Extras{% endblock %}
+
+{% block body %}
+    <h1>Edit Extras</h1>
+
+    {{ include('extras/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('extras_index') }}">back to list</a>
+
+    {{ include('extras/_delete_form.html.twig') }}
+{% endblock %}

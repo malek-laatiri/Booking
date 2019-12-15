@@ -1,0 +1,12 @@
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% extends 'base.html.twig' %}
+
+{% block title %}New Type{% endblock %}
+
+{% block body %}
+    <h1>Create new Type</h1>
+
+    {{ include('type/_form.html.twig') }}
+
+    <a href="{{ path('type_index') }}">back to list</a>
+{% endblock %}

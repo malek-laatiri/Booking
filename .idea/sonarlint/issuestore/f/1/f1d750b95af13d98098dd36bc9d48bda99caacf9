@@ -1,0 +1,10 @@
+
+P	php:S1481›".Remove this unused "$response" local variable.(ÐÎŒßüÿÿÿÿ8üØ…Õð-
+g	php:S1192h"FDefine a constant instead of duplicating this literal "UTF-8" 3 times.(¿Ý¡÷üÿÿÿÿ8üØ…Õð-
+h	php:S1192x"LDefine a constant instead of duplicating this literal "reservation" 6 times.(Í¡¶´8üØ…Õð-
+r	php:S4144Ú"UUpdate this method so that its implementation is not identical to "show" on line 137.(ˆøƒ—8üØ…Õð-
+P	php:S1481ì".Remove this unused "$response" local variable.(ÐÎŒßüÿÿÿÿ8üØ…Õð-
+s	php:S1192q"WDefine a constant instead of duplicating this literal "/../../public/QR/x.png" 4 times.(¯ÿ€™8üØ…Õð-
+t	php:S1192p"XDefine a constant instead of duplicating this literal "exclude_xml_declaration" 3 times.(è† Ì8üØ…Õð-
+p	php:S1142@"OReduce the number of returns of this function 4, down to the maximum allowed 3.(ùÅ–õÿÿÿÿÿ8üØ…Õð-
+n	php:S1192|"RDefine a constant instead of duplicating this literal "reservation_index" 3 times.(üÕÞ×8üØ…Õð-
