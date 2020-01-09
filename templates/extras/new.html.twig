@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Extras{% endblock %}
+
+{% block body %}
+    <h1>Create new Extras</h1>
+
+    {{ include('extras/_form.html.twig') }}
+
+    <a href="{{ path('extras_index') }}">back to list</a>
+{% endblock %}

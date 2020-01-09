@@ -1,0 +1,107 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reservation{% endblock %}
+
+{% block body %}
+
+
+    <a href="{{ path('reservation_index') }}">back to list</a>
+
+    <div class="main-content-inner">
+        <div class="row">
+            <div class="col-lg-12 mt-5">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="invoice-area">
+                            <div class="invoice-head">
+                                <div class="row">
+                                    <div class="iv-left col-6">
+                                        <span>Reservation</span>
+                                    </div>
+                                    <div class="iv-right col-6 text-md-right">
+                                        <span>#{{ reservation.voucher }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row align-items-center">
+                                <div class="col-md-6">
+                                    <div class="invoice-address">
+                                        <h3>Reservation to</h3>
+                                        <h5> {% for user in reservation.client %}
+                                                {{ user.nom }} {{ user.prenom }}
+                                            {% endfor %}</h5>
+                                        <p> {% for user in reservation.client %}
+                                                {{ user.email }}
+                                            {% endfor %}</p>
+                                        <p> {% for user in reservation.client %}
+                                                {{ user.telephone }}
+                                            {% endfor %}</p>
+                                        <p> {% for user in reservation.client %}
+                                                {{ user.nationalite }}
+                                            {% endfor %}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 text-md-right">
+                                    <ul class="invoice-date">
+                                        <li>Date Arrivee: {{ reservation.dateArrivee ? reservation.dateArrivee|date('Y-m-d') : '' }}</li>
+                                        <li>Date depart : {{ reservation.dateDepart ? reservation.dateDepart|date('Y-m-d') : '' }}</li>
+                                        <li><img style="
+    width: 150px;
+" src="http://127.0.0.1:8000/QR/x.png"></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="invoice-table table-responsive mt-5">
+                                <table class="table table-bordered table-hover text-right">
+                                    <thead>
+                                    <tr class="text-capitalize">
+                                        <th class="text-center" style="width: 5%;">id</th>
+                                        <th class="text-left" style="width: 45%; min-width: 130px;">description</th>
+                                        <th>Extras</th>
+
+                                        <th>NbrAdulte</th>
+                                        <th style="min-width: 100px">NbrEnfant</th>
+                                        <th>reduction</th>
+
+                                        <th>total</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+
+                                        <td class="text-center">{{ reservation.id }}</td>
+                                        <td class="text-left">{{ reservation.type.nomtype }} {% set difference = date(reservation.dateDepart).diff(date(reservation.dateArrivee)) %}
+                                            {% set leftDays = difference.days %}
+                                            {{ leftDays }} days</td>
+                                        <td>  {% for user in reservation.extras %}
+                                               {{ user.typeExtras }}
+                                            {% endfor %}</td>
+
+                                        <td>{{ reservation.nbrAdulte }}</td>
+                                        <td>{{ reservation.nbrEnfant }}</td>
+                                        <td> {{ reservation.reduction }}%</td>
+                                        <td>{{ reservation.type.prix }}</td>
+                                    </tr>
+
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <td colspan="4">total balance :</td>
+                                        <td>{{ reservation.facture.montant }}</td>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="invoice-buttons text-right">
+                            <a href="{{ path('reservation_download', {'id': reservation.id}) }}" class="invoice-btn">print facture PDF</a>
+                            {{ include('reservation/_delete_form.html.twig') }}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

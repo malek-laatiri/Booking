@@ -1,0 +1,83 @@
+
+{% block body %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
+    <script>
+        $('#btn-submit').on('click',function(e){
+            e.preventDefault();
+            var form = $(this).parents('form');
+            sweetAlert({
+                title: "Are you sure?",
+                text: "You will not be able to recover this imaginary file!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                closeOnConfirm: false
+            }, function(isConfirm){
+                if (isConfirm) form.submit();
+            });
+        });
+
+    </script>
+
+    <script src="{{ asset('js/addTask.js') }}"></script>
+    <script src="{{ asset('js/addUser.js') }}"></script>
+    <div class="container-contact100">
+
+        <div class="wrap-contact100">
+
+            {{ form_start(form, {attr: {class: 'card-body'} }) }}
+            <div cl ass="card-body">
+
+                <ul id="email-fields-list"
+                    data-prototype="{{ form_widget(form.client.vars.prototype, {attr: {class: 'card-body'} })|e }}"
+                    data-widget-tags="{{ '<li></li>'|e }}"
+                    data-widget-counter="{{ form.children|length }}">
+                    {% for emailField in form.client %}
+                        <li>
+                            {{ form_errors(emailField) }}
+                            {{ form_widget(emailField, {attr: {class: 'card-body'} }) }}
+                        </li>
+                    {% endfor %}
+                </ul>
+                <button type="button"
+                        class="add-another-collection-widget btn btn-outline-primary mb-3 "
+                        data-list-selector="#email-fields-list"><i class="fas fa-calendar-alt">add client</i>
+                </button>
+
+
+
+
+                <ul id="red-fields-list"
+                    data-prototype="{{ form_widget(form.reduction.vars.prototype, {attr: {class: 'card-body'} })|e }}"
+                    data-widget-tags="{{ '<li></li>'|e }}"
+                    data-widget-counter="{{ form.children|length }}">
+                    {% for emailField in form.reduction %}
+                        <li>
+                            {{ form_errors(emailField) }}
+                            {{ form_widget(emailField, {attr: {class: 'card-body'} }) }}
+                        </li>
+                    {% endfor %}
+                </ul>
+                <button type="button"
+                        class="add-another-collection-reduction card-body btn btn-outline-primary mb-3 "
+                        data-list-selector="#red-fields-list"><i class="fas fa-calendar-alt">add reduction</i>
+                </button>
+            </div>
+
+            <div> {{ form_row(form.dateArrivee, {attr: {class: 'form-control js-datepicker'} }) }}</div>
+            <div> {{ form_row(form.dateDepart, {attr: {class: 'form-control js-datepicker '} }) }}</div>
+
+            <div> {{ form_row(form.nbrAdulte, {attr: {class: 'form-control '} }) }}</div>
+            <div>{{ form_row(form.nbrEnfant, {attr: {class: 'form-control'} }) }}</div>
+            <div>{{ form_row(form.type, {attr: {class: 'form-control selectpicker'} }) }}</div>
+            <div>{{ form_row(form.extras, {attr: {class: 'form-control selectpicker show-tick'} }) }}</div>
+
+
+
+            <button class="btn btn-outline-primary mb-3" id="btn-submit">{{ button_label|default('Save') }}</button>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

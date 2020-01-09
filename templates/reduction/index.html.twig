@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reduction index{% endblock %}
+
+{% block body %}
+    <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+    <!-- Start datatable css -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.jqueryui.min.css">
+    <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+<div class="main-content-inner">
+    <div class="row">
+
+        <!-- data table start -->
+        <div class="col-12 mt-5">
+            <div class="card">
+                {{ include('reduction/_form1.html.twig') }}
+
+                <div class="card-body">
+                    <h4 class="header-title">Reduction</h4>
+                    <div class="data-tables">
+    <table  id="dataTable" class="text-center">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>CodeReduction</th>
+                <th>DateDebut</th>
+                <th>DateFin</th>
+                <th>Taux</th>
+                <th>Expired</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reduction in reductions %}
+            <tr>
+                <td>{{ reduction.id }}</td>
+                <td>  {% if is_granted('ROLE_SUPER_ADMIN') %}
+                    {{ reduction.codeReduction }}
+                        {% elseif is_granted('ROLE_USER') -%}
+                        <script>
+                                document.getElementById("reduction1_csv").disabled = true;
+                        </script> *******
+                    {% endif %}
+
+                </td>
+                <td>{{ reduction.dateDebut ? reduction.dateDebut|date('Y-m-d') : '' }}</td>
+                <td>{{ reduction.dateFin ? reduction.dateFin|date('Y-m-d') : '' }}</td>
+                <td>{{ reduction.taux }}</td>
+                <td>{{ reduction.isexpired ? 'Yes' : 'No' }}</td>
+
+                <td>
+                    <a href="{{ path('reduction_show', {'id': reduction.id}) }}">show</a>
+                    <a href="{{ path('reduction_edit', {'id': reduction.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+                    </div></div></div></div></div></div>
+                        <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+                        <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+                        <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+                        <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+                        <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
+    <a href="{{ path('reduction_new') }}">Create new</a>
+
+{% endblock %}
